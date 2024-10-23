@@ -1,0 +1,50 @@
+services:
+  java:
+    image: openjdk:17
+    container_name: java
+    ports:
+      - 8080:8080
+      - 5050:5050
+    tty: true
+    volumes:
+      - ../server:/app
+    working_dir: /app
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15
+    container_name: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+    ports:
+      - 5432:5432
+    volumes:
+      - db-store:/var/lib/postgresql/data
+      - ./forDocker/db/initdb:/docker-entrypoint-initdb.d
+    healthcheck: # コンテナの起動チェック
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres}"]
+      interval: 10s
+      retries: 3
+
+  pgadmin:
+    image: dpage/pgadmin4:6.11
+    container_name: container_pgadmin
+    ports:
+      - 4200:80
+    volumes:
+      - volume_pgadmin:/var/lib/pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: example@example.com
+      PGADMIN_DEFAULT_PASSWORD: password
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  db-store:
+    name: vpg
+  volume_pgadmin:
+    name: vpga
