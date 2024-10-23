@@ -1,27 +1,29 @@
 package com.example.todo.controller;
 
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.todo.repository.TodoRepository;
+import com.example.todo.entity.Todo;
+import com.example.todo.service.TodoService;
+
 
 
 
 @RestController
 public class TodoController {
 
-    private final TodoRepository repository;
-
-
-    public TodoController(TodoRepository repository){
-        this.repository = repository;
-    }
+    @Autowired
+    private TodoService todoService;
 
     @GetMapping("/")
-    public String todo() {
-        return String.valueOf(repository.findAll());
+    public List<Todo> getAllTodos() {
+        return todoService.getAllTodos();
     }
+    
     
     
 }

@@ -4,19 +4,19 @@ CREATE DATABASE tododb;
 -- スキーマ作成
 CREATE SCHEMA dev;
 -- ロールの作成
-CREATE ROLE devUser WITH LOGIN PASSWORD 'postgres';
+CREATE ROLE dev WITH LOGIN PASSWORD 'dev';
 -- 権限追加
-GRANT ALL PRIVILEGES ON SCHEMA dev TO devUser;
+GRANT ALL PRIVILEGES ON SCHEMA dev TO dev;
 
 -- テーブル作成
 CREATE TABLE  dev.todo (
   id serial NOT NULL,
-  todo_name varchar(500),
-  user_name varchar(100),
+  title varchar(500),
+  compleated BOOLEAN DEFAULT FALSE,
   created_at TIMESTAMP,
   updated_at TIMESTAMP,
   PRIMARY KEY(id)
 );
 
 -- 権限追加
-GRANT ALL PRIVILEGES ON dev.todo TO devUser;
+GRANT ALL PRIVILEGES ON todo TO dev;
