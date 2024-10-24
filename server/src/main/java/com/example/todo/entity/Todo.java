@@ -1,5 +1,7 @@
 package com.example.todo.entity;
 
+import java.sql.Timestamp;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -14,7 +16,14 @@ public class Todo{
     private Long id;
 
     private String title;
-    private boolean completed;
+    private boolean done;
+    private Timestamp limitDate;
+
+    // public Todo(String title, boolean done, Timestamp limitDate){
+    //     this.title = title;
+    //     this.done = false;
+    //     this.limitDate = limitDate;
+    // };
 
     public Todo(){};
 
@@ -35,11 +44,19 @@ public class Todo{
         this.title = title;
     }
 
-    public boolean isCompleted() {
-        return completed;
+    public boolean isDone() {
+        return done;
     }
 
-    public void setCompleted(boolean completed) {
-        this.completed = completed;
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    public Timestamp getLimitDate() {
+        return limitDate;
+    }
+
+    public void setLimitDate(Timestamp limitDate){
+        this.limitDate = limitDate;
     }
 }

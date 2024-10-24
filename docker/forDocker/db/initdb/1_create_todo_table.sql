@@ -1,10 +1,10 @@
-CREATE DATABASE tododb;
+-- ロールの作成
+CREATE ROLE dev WITH LOGIN PASSWORD 'dev';
+CREATE DATABASE tododb with owner = dev;
 -- DBへ切り替え
 \c tododb
 -- スキーマ作成
 CREATE SCHEMA dev;
--- ロールの作成
-CREATE ROLE dev WITH LOGIN PASSWORD 'dev';
 -- 権限追加
 GRANT ALL PRIVILEGES ON SCHEMA dev TO dev;
 
@@ -12,11 +12,10 @@ GRANT ALL PRIVILEGES ON SCHEMA dev TO dev;
 CREATE TABLE  dev.todo (
   id serial NOT NULL,
   title varchar(500),
-  compleated BOOLEAN DEFAULT FALSE,
-  created_at TIMESTAMP,
-  updated_at TIMESTAMP,
+  done BOOLEAN DEFAULT FALSE,
+  limit_date TIMESTAMP,
   PRIMARY KEY(id)
 );
 
 -- 権限追加
-GRANT ALL PRIVILEGES ON todo TO dev;
+GRANT ALL PRIVILEGES ON dev.todo TO dev;
