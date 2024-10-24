@@ -2,6 +2,8 @@ package com.example.todo.entity;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,6 +19,7 @@ public class Todo{
 
     private String title;
     private boolean done;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Timestamp limitDate;
 
     // public Todo(String title, boolean done, Timestamp limitDate){

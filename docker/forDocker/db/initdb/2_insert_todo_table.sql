@@ -6,6 +6,7 @@ INSERT INTO dev.todo VALUES(3, '仕事を探す', false, now());
 -- DBコンテナ初期化の際にIdシーケンスが狂うので
 -- シーケンスを新たなに作成して修正する
 create sequence todo_seq;
+GRANT USAGE ON SEQUENCE todo_seq TO dev;
 select setval('todo_seq', (select max(id) from dev.todo));
 -- シーケンスをテーブルに適用する
 ALTER TABLE dev.todo ALTER COLUMN id SET DEFAULT nextval('todo_seq');
